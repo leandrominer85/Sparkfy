@@ -1,9 +1,9 @@
 # Sparkify Churn Prediction with PySpark ML and AWS EMR
 
 File description:
-- **PySpark Script (local)**: Sparkify_Churn_Prediction.ipynb
-- **AWS EMR Deployment Script**: Sparkify_spark_deploy.ipynb
-- **AWS EMR Results**: Sparkify_spark_deploy.html
+- **PySpark Script (local)**: Sparkify_small_dataset.ipynb
+- **AWS EMR Deployment Script**: Sparkify_full_dataset.ipynb
+
 
 
 **To access full fataset in S3**: "s3n://udacity-dsnd/sparkify/sparkify_event_data.json"
@@ -71,9 +71,17 @@ This gave us the following result with the smaller dataset:
 
 ![tests.png](images/tests.png)
 
-!!!!!!!!!!!!!
+With the full dataset i got this results for the F1 Score with the default parameters:
 
+LogisticRegression:  0.7530376437311861
+DecisionTreeClassifier:  0.7281994453132363
+RandomForestClassifier: 0.7133317926181466
+LinearSVC:  0.7569933772112831
 
+With the Logistic and the SVC close in scoring i choose to do a cross-validation with both. The results are (f1 score):
+
+LogisticRegression :0.7435218879141079. Best Param (regParam):  0.01 .Best Param (MaxIter):  10. Best Param (elasticNetParam):  0.0
+LinearSVC: 
 
 ## AWS EMR Deployment
 The pipeline is deployed on AWS EMR with full data. 
