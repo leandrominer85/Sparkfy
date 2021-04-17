@@ -1,19 +1,25 @@
+# Sparkify Churn Prediction with PySpark ML and AWS EMR
+
+File description:
+- **PySpark Script (local)**: Sparkify_Churn_Prediction.ipynb
+- **AWS EMR Deployment Script**: Sparkify_spark_deploy.ipynb
+- **AWS EMR Results**: Sparkify_spark_deploy.html
+
+
+**To access full fataset in S3**: "s3n://udacity-dsnd/sparkify/sparkify_event_data.json"
+
+
 ## Overview
 **Sparkify** is a digital music service similar to [**Netease** **Cloud** **Music**]( https://music.163.com/ ) or [**QQ Music**](https://y.qq.com). Many of the users stream their favorite songs in Sparkify service everyday, either using free tier that places advertisements in between the songs, or using the premium subscription model where they stream music as free, but pay a monthly flat rate. User can upgrade, downgrade or cancel their service at anytime.  
 
-This is a `Customer Churn Prediction Problem` , there are so many similar projects, such as [WSDM - KKBox's Churn Prediction Challenge](https://www.kaggle.com/c/kkbox-churn-prediction-challenge) competition from [Kaggle](https://www.kaggle.com), and a few helpful links are follows:
+This is a `Customer Churn Prediction Problem` , there are so many similar projects, such as [WSDM - KKBox's Churn Prediction Challenge](https://www.kaggle.com/c/kkbox-churn-prediction-challenge) competition from [Kaggle](https://www.kaggle.com).
 
-- [Customer Churn Prediction using Machine Learning (How To)](https://addepto.com/machine-learning-predict-reduce-customer-churn/)
-- [Prediction of Customer Churn with Machine Learning](https://www.datasciencecentral.com/profiles/blogs/prediction-of-customer-churn-with-machine-learning)
-- [Customer Churn Prediction and Prevention](https://www.optimove.com/resources/learning-center/customer-churn-prediction-and-prevention)
-- [Hands-on: Predict Customer Churn](https://towardsdatascience.com/hands-on-predict-customer-churn-5c2a42806266)
+Our job is to implement a machine learning model that can predict the churn rate. For this i will do the following steps:
 
-So, our job is deep mining the customers' data and implement appropriate model to predict customer churn as follow steps:
-
-- Clean data: fill the nan values , correct the data types, drop the outliers.
-- EDA: exploratory data to look features' distributions and correlation with key label (churn).
-- Feature engineering: extract and found customer-features and customer-behavior-features; Implement standscaler on numerical features.
-- Train and measure models:  I choose logistic regression, linear svm classifier, decision tree and random forest classifier to train a baseline model and tuning a better model from best of them. It is worth mentioning that this data is unbalanced because of less churn customers, so we choose `f1 score`  as a metrics to measure models' performance.
+- Clean data: remove unnecessary data, clean NANs, create churn collum, etc..
+- EDA: explore the data to see the data and the correlation with the churn column.
+- Feature engineering: extract the main features  and implement standarization on the data.
+- Train and measure models:  All the previous steps where conducted in a smmaler dataset. With this dataset the best model was the linearregression. 
 
 ## Installation
 
@@ -21,23 +27,56 @@ So, our job is deep mining the customers' data and implement appropriate model t
 - PySpark ML
 - Jupyter
 
+
+#### Data schema:
+
+- artist: string (nullable = true)
+- auth: string (nullable = true)
+- firstName: string (nullable = true)
+- gender: string (nullable = true)
+- itemInSession: long (nullable = true)
+- lastName: string (nullable = true)
+- length: double (nullable = true)
+- level: string (nullable = true)
+- location: string (nullable = true)
+- method: string (nullable = true)
+- page: string (nullable = true)
+- registration: long (nullable = true)
+- sessionId: long (nullable = true)
+- song: string (nullable = true)
+- status: long (nullable = true)
+- ts: long (nullable = true)
+- userAgent: string (nullable = true)
+- userId: string (nullable = true)
+
+
+
+## Feature Selection
+After exploring the dataset, 7 features have been chosen for further analysis:
+
+- gender: female = 1, male = 0
+- time_from_creation: days since registration at the last user login time
+- paid_user: whether the user has ever used paid tier service
+- Downgrade: whether the user has ever downgraded 
+- total_songs_played - total number of songs played by the user
+- interactions - max user actions
+- session_time -days since registration and the session
+
+
+
 ## Results
 
-The baseline of four machine learning methods: Logistic Regression, Linear SVC, Decision Tree Classifier and Random Forest Classifier. 
+I used four models to get the baseline: Logistic Regression, Linear SVC, Decision Tree Classifier and Random Forest Classifier.
+This gave us the following result with the smaller dataset:
 
-![u8Af6e.png](https://s2.ax1x.com/2019/09/29/u8Af6e.png)
+![tests.png](images/tests.png)
 
-Though the `LinearSVC` spent more training time, but it can get the highest f1 score 0.702. And the `LogisticRegression` has a medium training time and f1 score, maybe I can tuning it to get a higher 
-score. So I'll choose `LinearSVC` and `LogisticRegression` to tuning, and the result is as follows:
+!!!!!!!!!!!!!
 
-| Model Name         | F1-score | Training Time(s) |
-| ------------------ | -------- | ---------------- |
-| LogisticRegression | 0.7021   | 14.5863          |
-| LinearSVC          | 0.7045   | 60.1778          |
 
-Considering this is only a quit mini dataset and our purpose is scaling this up to the total 12G  dataset, so, the logistic regression is the best model from now on in this project.
 
-Please check my blog post to get more details, here is the [link](https://www.capallen.top/2019/Churn-or-Not.html).
+## AWS EMR Deployment
+The pipeline is deployed on AWS EMR with full data. 
 
 ## References
 
