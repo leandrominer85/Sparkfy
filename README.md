@@ -81,7 +81,9 @@ LinearSVC:  0.7569933772112831
 With the Logistic and the SVC close in scoring i choose to do a cross-validation with both. The results are (f1 score):
 
 LogisticRegression :0.7435218879141079. Best Param (regParam):  0.01 .Best Param (MaxIter):  10. Best Param (elasticNetParam):  0.0
-LinearSVC: 
+LinearSVC: 0.755621576663529. Best Param (regParam):  0.01 . Best Param (MaxIter):  100
+
+So the LinearSVS is slightly better, but it took a longer time to run. So for the sake of economy we will take the Logistic Regression as the final model
 
 ## AWS EMR Deployment
 The pipeline is deployed on AWS EMR with full data. 
