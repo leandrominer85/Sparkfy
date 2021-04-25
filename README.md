@@ -1,4 +1,4 @@
-# Sparkify Churn Prediction with PySpark ML and AWS EMR
+# Predict Sparkify Churn using PySpark and AWS
 
 Files:
 - **PySpark Script (local)**: Sparkify_small_dataset.ipynb
@@ -8,7 +8,7 @@ Files:
 ## Overview
 Sparkify is a music streaming service in the Udacity universe. Just like other streaming services, users can choose free tier subscription with ads or paid tier without ads. They can also change their account type anytime they want. 
 
-In this project, we will predict users that are at-risk to churn based on Sparkify user data. We will first analyze the data on a smaller subset (128MB), then deploy the pipeline to the Amazon Cloud Services, AWS EMR, to tune selected models with the full dataset (12GB).:
+We will use a small dataset (128MB) to do the analisys. Then we will proceed to deployment with the Amazon Cloud Services, AWS EMR, with the full dataset (12GB). The objective is to make a model that can predict the user churn.
 
 - Clean data: remove unnecessary data, clean NANs, create churn collum, etc..
 - EDA: explore the data to see the data and the correlation with the churn column.
@@ -28,7 +28,7 @@ level: string, location: string,method: string ,page: string,registration: long,
 userAgent: string,userId: string. It also contains  286500 records and 225 distinct users (for the small one).
 
 
-After exploring the dataset, 7 features have been chosen for further analysis:
+7 features have been chosen for further analysis:
 
 - gender: female = 1, male = 0
 - time_from_creation: days since registration at the last user login time
