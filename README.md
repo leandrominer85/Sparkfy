@@ -1,58 +1,34 @@
-# Sparkify Churn Prediction with PySpark ML and AWS EMR
+# Predict Sparkify Churn using PySpark and AWS
 
-File description:
+Files:
 - **PySpark Script (local)**: Sparkify_small_dataset.ipynb
 - **AWS EMR Deployment Script**: Sparkify_full_dataset.ipynb
 
 
-
-**To access full fataset in S3**: "s3n://udacity-dsnd/sparkify/sparkify_event_data.json"
-
-
 ## Overview
-**Sparkify** is a digital music service similar to [**Netease** **Cloud** **Music**]( https://music.163.com/ ) or [**QQ Music**](https://y.qq.com). Many of the users stream their favorite songs in Sparkify service everyday, either using free tier that places advertisements in between the songs, or using the premium subscription model where they stream music as free, but pay a monthly flat rate. User can upgrade, downgrade or cancel their service at anytime.  
+Sparkify is a music streaming service in the Udacity universe. Just like other streaming services, users can choose free tier subscription with ads or paid tier without ads. They can also change their account type anytime they want. 
 
-This is a `Customer Churn Prediction Problem` , there are so many similar projects, such as [WSDM - KKBox's Churn Prediction Challenge](https://www.kaggle.com/c/kkbox-churn-prediction-challenge) competition from [Kaggle](https://www.kaggle.com).
-
-Our job is to implement a machine learning model that can predict the churn rate. For this i will do the following steps:
+We will use a small dataset (128MB) to do the analisys. Then we will proceed to deployment with the Amazon Cloud Services, AWS EMR, with the full dataset (12GB). The objective is to make a model that can predict the user churn.
 
 - Clean data: remove unnecessary data, clean NANs, create churn collum, etc..
 - EDA: explore the data to see the data and the correlation with the churn column.
 - Feature engineering: extract the main features  and implement standarization on the data.
 - Train and measure models:  All the previous steps where conducted in a smmaler dataset. With this dataset the best model was the linearregression. 
 
-## Installation
+## Aplications
 
 - Python 3.6
 - PySpark ML
 - Jupyter
 
 
-#### Data schema:
-
-- artist: string (nullable = true)
-- auth: string (nullable = true)
-- firstName: string (nullable = true)
-- gender: string (nullable = true)
-- itemInSession: long (nullable = true)
-- lastName: string (nullable = true)
-- length: double (nullable = true)
-- level: string (nullable = true)
-- location: string (nullable = true)
-- method: string (nullable = true)
-- page: string (nullable = true)
-- registration: long (nullable = true)
-- sessionId: long (nullable = true)
-- song: string (nullable = true)
-- status: long (nullable = true)
-- ts: long (nullable = true)
-- userAgent: string (nullable = true)
-- userId: string (nullable = true)
+## Data and Feature Selection
+The data has 18 columns : artist: string,auth: string, firstName,gender: string,itemInSession: long,lastName: string,length: double,
+level: string, location: string,method: string ,page: string,registration: long,sessionId: long,song: string,status: long, ts: long,
+userAgent: string,userId: string. It also contains  286500 records and 225 distinct users (for the small one).
 
 
-
-## Feature Selection
-After exploring the dataset, 7 features have been chosen for further analysis:
+7 features have been chosen for further analysis:
 
 - gender: female = 1, male = 0
 - time_from_creation: days since registration at the last user login time
@@ -85,8 +61,8 @@ LinearSVC: 0.755621576663529. Best Param (regParam):  0.01 . Best Param (MaxIter
 
 So the LinearSVS is slightly better, but it took a longer time to run. So for the sake of economy we will take the Logistic Regression as the final model
 
-## AWS EMR Deployment
-The pipeline is deployed on AWS EMR with full data. 
+## Final Model (AWS)
+The final model was trained on the AWS EMR and returned the above results. 
 
 ## References
 
